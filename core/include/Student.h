@@ -25,6 +25,8 @@ class Student: public User{
 
         void setAcademicYear(const string& academicYear);
         string getAcademicYear() const;
+
+        //bool operator==(const Student& other) const;
 };
 
 #endif

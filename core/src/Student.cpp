@@ -37,3 +37,7 @@ void Student::setAcademicYear(const string& academicYear){
 string Student::getAcademicYear() const{
     return academicYear;
 }
+
+// bool Student::operator==(const Student& other) const{
+//     return (studentID == other.studentID);
+// }

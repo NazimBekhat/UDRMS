@@ -1,8 +1,8 @@
 #ifndef USER_H
 #define USER_H
 
-#include <iostream>
-using namespace std;
+#include <string>
+using std::string; //we needed jsut string so no need to impotr the whole library
 
 class User{
     private:
@@ -18,7 +18,7 @@ class User{
         void setUsername(const string& username);
         string getUsername() const;
         void setPassword(const string& password);
-        string getPassword() const;
+        //string getPassword() const;
 };
 
 #endif

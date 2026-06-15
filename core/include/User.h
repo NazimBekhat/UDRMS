@@ -13,7 +13,7 @@ class User{
         virtual ~User()=default; //so when we delete a list of pointers of type user it uses the correct destructor of the object
 
         virtual bool login(const string& inputPassword); //virtual
-        virtual string getRole()=0; //pure virtual
+        virtual string getRole()const =0; //pure virtual, const sicne it should be called by non const objects
 
         void setUsername(const string& username);
         string getUsername() const;

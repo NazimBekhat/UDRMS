@@ -25,7 +25,7 @@ class Room{
 
         void addStudent(Student* student); //we add one student at a time then we pass 1 student
         void removeStudent(int studentID); //remove by student ID to apply operator overloading
-        virtual string getType()=0;
+        virtual string getType()const=0;
         void displayStudentsInRoom();
         bool isFull();
 };

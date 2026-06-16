@@ -47,6 +47,10 @@ void Room::displayStudentsInRoom(){
     }
 }
 
-bool Room::isFull(){
+bool Room::isFull() const{
     return capacity == students.size();
+}
+
+bool Room::isEmpty() const{
+    return students.size() == 0;
 }

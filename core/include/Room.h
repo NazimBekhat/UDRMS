@@ -27,7 +27,8 @@ class Room{
         void removeStudent(int studentID); //remove by student ID to apply operator overloading
         virtual string getType()const=0;
         void displayStudentsInRoom();
-        bool isFull();
+        bool isFull() const;
+        bool isEmpty() const;
 };
 
 #endif

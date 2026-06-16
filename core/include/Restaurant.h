@@ -10,7 +10,7 @@ class Restaurant{
         string lunchMenu;
         string dinnerMenu;
     public:
-        Restaurant(const string& breakFastMenu, const string& lunchMenu, const string& dinnerMenu);
+        Restaurant(const string& breakFastMenu="", const string& lunchMenu="", const string& dinnerMenu="");
 
         void setBreakFastMenu(const string& breakFastMenu);
         string getBreakFastMenu() const;

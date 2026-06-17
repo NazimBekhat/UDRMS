@@ -1,0 +1,87 @@
+Move Constructor — Why UDRMS Needs It
+======================================
+
+THE PROBLEM
+-----------
+Dormitory has its copy constructor deleted (to avoid double-delete of Room*).
+University stores dormitories in a vector<Dormitory>.
+When a vector runs out of space, it allocates a new bigger block and transfers
+all existing elements to it. "Transfer" means either copy or move each element.
+Copy is deleted → compile error. So the vector needs to MOVE elements instead.
+
+
+TWO KINDS OF VALUES
+-------------------
+lvalue  — has a name, persists in memory
+          Example: Dormitory d("Block A", 5);   ← d is an lvalue
+
+rvalue  — temporary, no name, about to be destroyed
+          Example: Dormitory("Block A", 5)       ← nameless temporary
+
+
+WHAT && MEANS
+-------------
+& binds to lvalues (copy constructor)
+&& binds to rvalues — temporaries that are about to die
+
+Dormitory(const Dormitory& other)   // copy — called on lvalues
+Dormitory(Dormitory&& other)        // move — called on rvalues (temporaries)
+
+When the compiler sees a temporary being passed, it picks && if available.
+That's the signal: "you can steal from this, it's dying anyway."
+
+
+COPY vs MOVE
+------------
+Copy = duplicate everything. Expensive.
+Move = steal the data. The source becomes empty but valid. The destination
+       now owns everything.
+
+Analogy: copy = photocopy every file in a box.
+         move = just hand over the box.
+
+
+CONCRETE EXAMPLE
+----------------
+dormitories.push_back(Dormitory("Block A", 5));
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+                      temporary → rvalue → compiler looks for move constructor
+
+Dormitory d("Block A", 5);
+dormitories.push_back(d);
+                      ^
+                      d has a name → lvalue → compiler looks for copy constructor
+
+
+WHY = default WORKS FOR Dormitory
+----------------------------------
+Dormitory has:
+  - vector<Room*> rooms    → already knows how to move itself
+  - Restaurant restaurant  → same
+  - string name            → same
+
+So = default tells the compiler: move each member using their own move.
+No custom logic needed.
+
+Add these two lines to Dormitory.h:
+
+    Dormitory(Dormitory&& other) = default;
+    Dormitory& operator=(Dormitory&& other) = default;
+
+
+THE IMPLICIT MOVE SUPPRESSION RULE
+------------------------------------
+If you declare a copy constructor (even as = delete), the compiler suppresses
+the implicit move constructor. So after deleting copy, Dormitory has neither
+copy nor move → vector<Dormitory> is completely broken.
+The fix above restores the move explicitly.
+
+
+SUMMARY
+-------
+1. vector<Dormitory> needs to move elements during reallocation.
+2. Copy is deleted → move is the only option.
+3. Declaring = delete on copy also suppresses the implicit move.
+4. Fix: explicitly = default the move constructor and move assignment.
+5. After a move, the source Dormitory is empty but valid — destructor handles it
+   safely because it already loops over an empty rooms vector.

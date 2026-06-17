@@ -10,8 +10,9 @@ class Student: public User{
         int studentID;
         string fullName;
         string academicYear;
+        bool inRoom=false;
     public:
-        Student(const string& username, const string& password, int studentID, const string& fullName, const string& academicYear);
+        Student(const string& username, const string& password, int studentID, const string& fullName, const string& academicYear, bool inRoom=false);
         
         virtual string getRole() const override;
 
@@ -25,6 +26,9 @@ class Student: public User{
 
         void setAcademicYear(const string& academicYear);
         string getAcademicYear() const;
+
+        void setInRoom(bool inRoom);
+        bool getInRoom() const;
 
         //bool operator==(const Student& other) const;
 };

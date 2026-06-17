@@ -29,13 +29,17 @@ void Room::addStudent(Student* student){
     for (Student* s: students){
         if (s==student) return; //return an exception after this
     }
+    if (student->getInRoom()) return;
     students.push_back(student);
+    student->setInRoom(true);
 } //we add one student at a time then we pass 1 student
         
 void Room::removeStudent(int studentID){
     for (auto ptr = students.begin(); ptr != students.end(); ptr++){
         if ((*ptr)->getStudentID() == studentID){
+            Student* s = *ptr;
             students.erase(ptr); 
+            s->setInRoom(false);
             return;
         }
     }

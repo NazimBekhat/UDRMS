@@ -45,6 +45,9 @@ int main(){
     dorm1.removeRoom(3);
     cout << "Room 3 exists: " << (dorm1.getRoom(3) == nullptr ? "no" : "yes") << endl; // removed → nullptr
     
+    dorm1.getRoom(1)->removeStudent(1); // s1 leaves Room 1, inRoom → false
+    dorm1.addStudentToRoom(&s1, dorm1.getRoom(2)); // now should succeed
+    dorm1.getRoom(2)->displayStudentsInRoom(); // should show s1 and s2
 
 
     return 0;

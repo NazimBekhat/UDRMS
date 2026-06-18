@@ -8,8 +8,9 @@ class User{
     private:
         string username;
         string password;
+        string fullName;
     public:
-        User(const string& username, const string& password);
+        User(const string& username, const string& password,const string& fullName);
         virtual ~User()=default; //so when we delete a list of pointers of type user it uses the correct destructor of the object
 
         virtual bool login(const string& inputPassword); //virtual
@@ -19,6 +20,8 @@ class User{
         string getUsername() const;
         void setPassword(const string& password);
         //string getPassword() const;
+        void setFullName(const string& fullName);
+        string getFullName() const;
 };
 
 #endif

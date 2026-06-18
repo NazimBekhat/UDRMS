@@ -58,3 +58,7 @@ bool Room::isFull() const{
 bool Room::isEmpty() const{
     return students.size() == 0;
 }
+
+const std::vector<Student*>& Room::getStudents() const {
+    return students;
+}

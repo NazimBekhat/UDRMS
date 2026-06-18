@@ -22,6 +22,8 @@ class Room{
         void setCapacity(int capcity);
         int getCapacity() const;
 
+        const std::vector<Student*>& getStudents() const;
+
 
         void addStudent(Student* student); //we add one student at a time then we pass 1 student
         void removeStudent(int studentID); //remove by student ID to apply operator overloading

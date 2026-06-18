@@ -3,6 +3,7 @@
 #include <algorithm>
 using std::remove;
 
+#include "Dormitory.h"
 
 University::University(const string& name): name(name){}
 
@@ -18,6 +19,14 @@ string University::getName() const{
 
 void University::setName(const string& name){
     this->name = name;
+}
+
+const vector<User*>& University::getUsers() const {
+    return users;
+}
+
+const vector<Dormitory>& University::getDormitories() const {
+    return dormitories;
 }
 
 void University::addUser(User* user){

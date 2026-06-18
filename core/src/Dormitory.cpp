@@ -13,10 +13,10 @@ void Dormitory::setName(const string& name){
     this->name = name;
 }
 
-Restaurant& Dormitory::getRestaurant(){
+const Restaurant&  Dormitory::getRestaurant() const{
     return restaurant;
 }
-
+ 
 void Dormitory::addRoom(Room* room){
     if (room == nullptr) return; //throw later
     if (getRoom(room->getRoomNumber()) != nullptr) return; //have to be non duplicate, thow
@@ -53,6 +53,10 @@ Room* Dormitory::getRoom(int roomNumber){
         if (room->getRoomNumber() == roomNumber) return room;
     }
     return nullptr;
+}
+
+const vector<Room*>& Dormitory::getRooms() const{
+    return rooms;
 }
 
 Dormitory::~Dormitory(){

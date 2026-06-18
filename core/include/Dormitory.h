@@ -22,14 +22,14 @@ class Dormitory{
         string getName() const;
         void setName(const string& name);
 
-        Restaurant& getRestaurant(); //no need for setters since we can modify by using class setters, it is noncosnt since we will modify it later
+        const Restaurant& getRestaurant() const; //no need for setters since we can modify by using class setters, it is noncosnt since we will modify it later
 
         void addRoom(Room* room); //cannot add const in the beggining since we are going to push back then it is considered as modifying the object
         void removeRoom(int roomNumber);
         void addStudentToRoom(Student* student,Room* room);
 
         Room* getRoom(int roomNumber); //returns a pointer to the desired room
-
+        const vector<Room*>& getRooms() const;
 
         //we have vector<Room*> rooms; so we need a destructor in which we delete those oen by oe
         ~Dormitory();

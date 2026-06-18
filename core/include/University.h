@@ -7,7 +7,7 @@ using std::string;
 using std::vector;
 
 class User;
-class Dormitory;
+#include "Dormitory.h"
 
 class University{
     private:
@@ -21,6 +21,9 @@ class University{
 
         string getName() const;
         void setName(const string& name);
+
+        const vector<User*>& getUsers() const;
+        const vector<Dormitory>& getDormitories() const;
 
         void addUser(User* user);
         void removeUser(User* user);

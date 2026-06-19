@@ -23,6 +23,7 @@ class Dormitory{
         void setName(const string& name);
 
         const Restaurant& getRestaurant() const; //no need for setters since we can modify by using class setters, it is noncosnt since we will modify it later
+        Restaurant& getRestaurant(); //used by loaddata and the upper one by backup()
 
         void addRoom(Room* room); //cannot add const in the beggining since we are going to push back then it is considered as modifying the object
         void removeRoom(int roomNumber);

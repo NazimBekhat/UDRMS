@@ -24,6 +24,7 @@ class University{
 
         const vector<User*>& getUsers() const;
         const vector<Dormitory>& getDormitories() const;
+        vector<Dormitory>& getDormitories();
 
         void addUser(User* user);
         void removeUser(User* user);

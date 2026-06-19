@@ -29,6 +29,10 @@ const vector<Dormitory>& University::getDormitories() const {
     return dormitories;
 }
 
+vector<Dormitory>& University::getDormitories() {
+    return dormitories;
+}
+
 void University::addUser(User* user){
     if (user == nullptr) return;
     users.push_back(user);

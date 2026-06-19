@@ -8,7 +8,6 @@ using std::string;
 class Student: public User{
     private:
         int studentID;
-        string fullName;
         string academicYear;
         bool inRoom=false;
     public:
@@ -20,9 +19,6 @@ class Student: public User{
 
         void setStudentID(int studentID);
         int getStudentID() const;
-
-        void setFullName(const string& fullName);
-        string getFullName() const;
 
         void setAcademicYear(const string& academicYear);
         string getAcademicYear() const;

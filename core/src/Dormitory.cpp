@@ -16,7 +16,11 @@ void Dormitory::setName(const string& name){
 const Restaurant&  Dormitory::getRestaurant() const{
     return restaurant;
 }
- 
+
+Restaurant& Dormitory::getRestaurant(){
+    return restaurant;
+}
+
 void Dormitory::addRoom(Room* room){
     if (room == nullptr) return; //throw later
     if (getRoom(room->getRoomNumber()) != nullptr) return; //have to be non duplicate, thow

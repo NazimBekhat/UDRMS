@@ -11,8 +11,11 @@
 #include "University.h"
 #include "User.h"
 #include <fstream>
+#include <sstream>
 using std::ofstream;
 using std::ifstream;
+using std::stringstream;
+
 
 SystemAdmin::SystemAdmin(const string& username, const string& password, const string& fullName): User(username, password, fullName){}
 
@@ -81,16 +84,114 @@ void SystemAdmin::backup(University& uni, const std::string& filename) {
     file.close();
 }
 
-void SystemAdmin::loadData(University& uni, const string& filename){
+void SystemAdmin::loadData(University& uni, const std::string& filename) {
     ifstream file(filename);
     if (!file.is_open()) return;
 
     string line;
     Dormitory* currentDorm = nullptr;
 
-    while (getline(file,line)){
+    while (getline(file, line)){
+        stringstream ss(line); //std::stringstream lets you treat a string like a stream you can read from piece by piece
+        //std::stringstream ss(line); This creates a stream object called ss, loaded with the text from line. Think of ss as a "reading head" positioned at the very start of the string.
+        string token;
+        getline(ss,token, '|');//| is the delimiter, it reads from the current position of ss (the start), grabs every character until it hits |, and stores that into token. Then it moves the reading head past that |, ready for the next read.
+    
+        //UNI
+        if (token == "UNIVERSITY"){
+            string uniName;
+            getline(ss,uniName, '|');
+            uni.setName(uniName);
+            //If the line started with UNIVERSITY, the next field is the university's name. Read it, set it on the uni object passed in.
+        }
 
+        //STUDENT
+        else if (token == "STUDENT"){
+            string idStr, fullName, yearStr, inRoomStr;
+            getline(ss, idStr, '|');
+            getline(ss, fullName, '|');
+            getline(ss, yearStr, '|');
+            getline(ss, inRoomStr, '|');
+            Student* s = new Student("", "", stoi(idStr), fullName,yearStr, stoi(inRoomStr));
+        //stoi converts "1" to 1
+            uni.addUser(s);
+        }
+
+        //Staff
+        else if (token == "STAFF") {
+            std::string idStr, fullName, dept;
+            std::getline(ss, idStr, '|');
+            std::getline(ss, fullName, '|');
+            std::getline(ss, dept, '|');
+            Staff* st = new Staff("", "", std::stoi(idStr), dept);
+            st->setFullName(fullName);
+            uni.addUser(st);
+        }
+
+        //Admin
+        else if (token == "ADMIN") {
+            std::string idStr, fullName;
+            std::getline(ss, idStr, '|');
+            std::getline(ss, fullName, '|');
+            Administrator* a = new Administrator("", "", std::stoi(idStr));
+            a->setFullName(fullName);
+            uni.addUser(a);
+        }
+
+        //System admin
+        else if (token == "SYSADMIN") {
+            std::string username, fullName;
+            std::getline(ss, username, '|');
+            std::getline(ss, fullName, '|');
+            SystemAdmin* sa = new SystemAdmin(username, "", fullName);
+            uni.addUser(sa);
+        }
+
+        //DORMITORY
+        else if (token == "DORMITORY"){
+            string dormName;
+            getline(ss, dormName, '|');
+            uni.addDormitory(Dormitory(dormName));
+            currentDorm = &uni.getDormitories().back(); //uni.getDormitories() returns const std::vector<Dormitory>& — the const version you wrote for backup(). .back() on a const vector gives you a const Dormitory&, so &...back() is a const Dormitory*. But currentDorm is declared as Dormitory* (non-const) — mismatch.You need a non-const overload of getDormitories() for loadData() to use, since loadData() needs to modify dormitories (add rooms, set restaurant).
+
+            //back() returns a reference to the last element in the vector. Since we just added this dormitory, it's the last one. & takes its address, storing a pointer in currentDorm.
+            //Why we need currentDorm: the next lines in the file (ROOM, RESTAURANT) belong to this dormitory, but the file format doesn't repeat the dormitory name on every line. So we remember "this is the dormitory we're currently filling in" until the next DORMITORY line appears.
+        }
+
+        //ROOM
+        else if (token == "ROOM" && currentDorm != nullptr){
+            string type, roomNumStr, capcacityStr;
+            getline(ss, type, '|');
+            getline(ss, roomNumStr, '|');
+            getline(ss, capcacityStr, '|');
+
+            Room* r = nullptr;
+            if (type == "SINGLE") r = new SingleRoom(stoi(roomNumStr));
+            else if (type == "DOUBLE") r = new DoubleRoom(stoi(roomNumStr));
+            else if (type == "SHARED") r = new SharedRoom(stoi(roomNumStr), stoi(capcacityStr));
+        
+            string studentIDStr;
+            while (getline(ss, studentIDStr, '|')){
+                User* u = uni.findUserByID(stoi(studentIDStr));
+                Student* s = dynamic_cast<Student*>(u);
+                if (s && r) r->addStudent(s);
+            }
+
+            if (r) currentDorm->addRoom(r);
+        }
+
+        //RESTAURANT
+        else if (token == "RESTAURANT" && currentDorm != nullptr) {
+            string breakfast, lunch, dinner;
+            getline(ss, breakfast, '|');
+            getline(ss, lunch, '|');
+            getline(ss, dinner, '|');
+
+            currentDorm->getRestaurant().setBreakFastMenu(breakfast);
+            currentDorm->getRestaurant().setLunchMenu(lunch);
+            currentDorm->getRestaurant().setDinnerMenu(dinner);
+        }
     }
     
+    file.close();
 }
-

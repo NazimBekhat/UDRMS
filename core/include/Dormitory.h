@@ -38,6 +38,8 @@ class Dormitory{
         //since dorm will never be copied in our system, then we delete copy and assignment operators from this class
         Dormitory(const Dormitory&)=delete;
         Dormitory& operator=(const Dormitory&)=delete;
+        Dormitory(Dormitory&&) = default;
+        Dormitory& operator=(Dormitory&&) = default;
     };
 
 //Since when we do Dorm d2 = d1, the compileer will create a shallow copy then it will delete the same pointer twice

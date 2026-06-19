@@ -11,7 +11,7 @@ class Staff: public User{
         string departement;
 
     public:
-        Staff(const string& username, const string& password,int staffID, const string& departement);
+        Staff(const string& username, const string& password,int staffID, const string& departement, const string& fullName);
 
         virtual string getRole() const override;
 

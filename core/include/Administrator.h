@@ -6,7 +6,7 @@ class Administrator: public User{
     private:
         int adminID;
     public:
-        Administrator(const string& username, const string& password, int adminID);
+        Administrator(const string& username, const string& password, int adminID,const string& fullName);
 
         int getAdminID() const;
         void setAdminID(int adminID);

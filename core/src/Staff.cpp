@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-Staff::Staff(const string& username, const string& password,int staffID, const string& departement): User(username,password), staffID(staffID), departement(departement){};
+Staff::Staff(const string& username, const string& password,int staffID, const string& departement, const string& fullName): User(username,password,fullName), staffID(staffID), departement(departement){};
 
 string Staff::getRole() const{
     return "Staff";

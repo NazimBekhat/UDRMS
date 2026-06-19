@@ -9,6 +9,7 @@
 #include "Student.h"
 #include "SystemAdmin.h"
 #include "User.h"
+#include "University.h"
 
 #include <iostream>
 using namespace std;
@@ -30,13 +31,14 @@ int main(){
 
 //Student(const string& username, const string& password, int studentID, const string& fullName, const string& academicYear);
 
-    Student s1("nazim_bekhat","nazim",1,"Nazim Bekhat","25/26"), s2("abdou_bekhat","abdou",1,"Abdou Bekhat","24/25");
-    dorm1.addStudentToRoom(&s1,dorm1.getRoom(1));
-    dorm1.addStudentToRoom(&s2,dorm1.getRoom(1)); //should fail
+    Student* s1 = new Student("nazim_bekhat","nazim",1,"Nazim Bekhat","25/26");
+    Student* s2 = new Student("abdou_bekhat","abdou",2,"Abdou Bekhat","24/25");
+    dorm1.addStudentToRoom(s1,dorm1.getRoom(1));
+    dorm1.addStudentToRoom(s2,dorm1.getRoom(1)); //should fail
     dorm1.getRoom(1)->displayStudentsInRoom(); // should show only s1
 
-    dorm1.addStudentToRoom(&s1,dorm1.getRoom(2));
-    dorm1.addStudentToRoom(&s2,dorm1.getRoom(2)); //will work
+    dorm1.addStudentToRoom(s1,dorm1.getRoom(2));
+    dorm1.addStudentToRoom(s2,dorm1.getRoom(2)); //will work
 
     dorm1.getRoom(2)->displayStudentsInRoom(); // should show s1 and s2
     
@@ -46,11 +48,52 @@ int main(){
     cout << "Room 3 exists: " << (dorm1.getRoom(3) == nullptr ? "no" : "yes") << endl; // removed → nullptr
     
     dorm1.getRoom(1)->removeStudent(1); // s1 leaves Room 1, inRoom → false
-    dorm1.addStudentToRoom(&s1, dorm1.getRoom(2)); // now should succeed
+    dorm1.addStudentToRoom(s1, dorm1.getRoom(2)); // now should succeed
     dorm1.getRoom(2)->displayStudentsInRoom(); // should show s1 and s2
 
 
+    cout << "\n--- University + File Handling Test ---\n";
+
+    University uni1("ENSIA");
+
+    Staff* staff1 = new Staff("john_doe", "pass", 10, "Maintenance","John Foe");
+    Administrator* admin1 = new Administrator("jane_doe", "pass", 20, "Jane Doe");
+    SystemAdmin* sysadmin1 = new SystemAdmin("root", "pass", "Root User");
+
+    uni1.addUser(s1);
+    uni1.addUser(s2);
+    uni1.addUser(staff1);
+    uni1.addUser(admin1);
+    uni1.addUser(sysadmin1);
+
+    dorm1.getRestaurant().setBreakFastMenu("Eggs");
+    dorm1.getRestaurant().setLunchMenu("Steack");
+    dorm1.getRestaurant().setDinnerMenu("Orange");
+
+    uni1.addDormitory(move(dorm1));
+
+    sysadmin1->backup(uni1, "../../data/test_backup.txt");
+    cout << "Backup written.\n";
+
+    University uni2("Placeholder");
+    sysadmin1->loadData(uni2, "../../data/test_backup.txt");
+
+    cout<<"Loaded university name: "<<uni2.getName()<<endl;
+    cout<<"Loaded user count: "<<uni2.getUsers().size()<<endl;
+    cout<<"Loaded dormitory count: "<<uni2.getDormitories().size()<<endl;
+
+    for (User* u: uni2.getUsers()){
+        cout<<u->getRole()<<" - "<<u->getFullName()<<endl;
+    }
+
+    for (const Dormitory& d: uni2.getDormitories()){
+        cout<<"Dormitory: "<<d.getName()<<", rooms: "<<d.getRooms().size()<<endl;
+        for (Room* r: d.getRooms()){
+            cout<<" Room "<<r->getRoomNumber()<<" ("<<r->getType()<<"), students: "<<r->getStudents().size()<<endl;
+        }
+        cout<<" Restaurant: "<<d.getRestaurant().getBreakFastMenu()<<", "
+        <<d.getRestaurant().getLunchMenu()<<", "<<d.getRestaurant().getDinnerMenu()<<endl;
+    }
+
     return 0;
 }
-
-

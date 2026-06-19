@@ -1,6 +1,6 @@
 #include "Administrator.h"
 
-Administrator::Administrator(const string& username, const string& password, int adminID): User(username, password), adminID(adminID){}
+Administrator::Administrator(const string& username, const string& password, int adminID, const string& fullName): User(username, password, fullName), adminID(adminID){}
 
 int Administrator::getAdminID() const{
     return adminID;

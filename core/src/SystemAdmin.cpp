@@ -16,7 +16,8 @@ using std::ofstream;
 using std::ifstream;
 using std::stringstream;
 
-
+#include <iostream>
+using namespace std;
 SystemAdmin::SystemAdmin(const string& username, const string& password, const string& fullName): User(username, password, fullName){}
 
 string SystemAdmin::getRole() const{
@@ -112,7 +113,7 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
             getline(ss, fullName, '|');
             getline(ss, yearStr, '|');
             getline(ss, inRoomStr, '|');
-            Student* s = new Student("", "", stoi(idStr), fullName,yearStr, stoi(inRoomStr));
+            Student* s = new Student("", "", stoi(idStr), fullName,yearStr, false);
         //stoi converts "1" to 1
             uni.addUser(s);
         }
@@ -123,7 +124,7 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
             std::getline(ss, idStr, '|');
             std::getline(ss, fullName, '|');
             std::getline(ss, dept, '|');
-            Staff* st = new Staff("", "", std::stoi(idStr), dept);
+            Staff* st = new Staff("", "", std::stoi(idStr), dept, fullName);
             st->setFullName(fullName);
             uni.addUser(st);
         }
@@ -133,7 +134,7 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
             std::string idStr, fullName;
             std::getline(ss, idStr, '|');
             std::getline(ss, fullName, '|');
-            Administrator* a = new Administrator("", "", std::stoi(idStr));
+            Administrator* a = new Administrator("", "", std::stoi(idStr), fullName);
             a->setFullName(fullName);
             uni.addUser(a);
         }
@@ -166,9 +167,9 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
             getline(ss, capcacityStr, '|');
 
             Room* r = nullptr;
-            if (type == "SINGLE") r = new SingleRoom(stoi(roomNumStr));
-            else if (type == "DOUBLE") r = new DoubleRoom(stoi(roomNumStr));
-            else if (type == "SHARED") r = new SharedRoom(stoi(roomNumStr), stoi(capcacityStr));
+            if (type == "Single Room") r = new SingleRoom(stoi(roomNumStr));
+            else if (type == "Double Room") r = new DoubleRoom(stoi(roomNumStr));
+            else if (type == "Shared Room") r = new SharedRoom(stoi(roomNumStr), stoi(capcacityStr));
         
             string studentIDStr;
             while (getline(ss, studentIDStr, '|')){

@@ -8,6 +8,23 @@ qt_add_executable(UDRMS
     ui/src/mainwindow.cpp
     ui/include/mainwindow.h
     ui/src/mainwindow.ui
+    ui/src/loginscreen.cpp
+    ui/include/loginscreen.h
+    ui/src/loginscreen.ui
+    core/src/User.cpp
+    core/src/Student.cpp
+    core/src/Staff.cpp
+    core/src/Administrator.cpp
+    core/src/SystemAdmin.cpp
+    core/src/Room.cpp
+    core/src/SingleRoom.cpp
+    core/src/DoubleRoom.cpp
+    core/src/SharedRoom.cpp
+    core/src/Restaurant.cpp
+    core/src/Dormitory.cpp
+    core/src/University.cpp
+    core/src/UDRMSException.cpp
+    core/src/Exceptions.cpp
 )
 target_include_directories(UDRMS PRIVATE
     core/include

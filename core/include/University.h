@@ -32,6 +32,7 @@ class University{
         //If you pass a temporary: university.addDormitory(Dormitory("Block A", 5)); Constructing that local copy = invoking the copy constructor. Copy is deleted → compile error.
         //Now you're binding directly to the temporary — no copy involved. Inside the function you do dormitories.push_back(std::move(dormitory)) to move it into the vector.
         User* findUserByID(int userID);
+        User* findUserByUsername(const std::string& username);
 
         University(const University&)=delete;
         University& operator=(const University&)=delete;

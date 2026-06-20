@@ -1,5 +1,7 @@
 #include "University.h"
 #include "Student.h"
+#include "Administrator.h"
+#include "Staff.h"
 #include <algorithm>
 using std::remove;
 
@@ -55,8 +57,21 @@ void University::addDormitory(Dormitory&& dormitory){
 
 User* University::findUserByID(int userID){
     for (User* user: users){
-        if (dynamic_cast<Student*>(user) == nullptr) continue;
-        if (dynamic_cast<Student*>(user)->getStudentID() == userID) return dynamic_cast<Student*>(user);
+        if (Student* s = dynamic_cast<Student*>(user)){
+            if (s->getStudentID() == userID) return s;
+        } else if (Staff* st = dynamic_cast<Staff*>(user)){
+            if (st->getStaffID() == userID) return st;
+        } else if (Administrator* a = dynamic_cast<Administrator*>(user)){
+            if (a->getAdminID() == userID) return a;
+        }
+        // SystemAdmin has no ID field — intentionally unmatched, not a bug
+    }
+    return nullptr;
+}
+
+User* University::findUserByUsername(const string& username){
+    for (User* user : users){
+        if (user->getUsername() == username) return user;
     }
     return nullptr;
 }

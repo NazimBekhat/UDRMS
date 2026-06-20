@@ -10,6 +10,7 @@
 #include "SystemAdmin.h"
 #include "University.h"
 #include "User.h"
+#include "Exceptions.h"
 #include <fstream>
 #include <sstream>
 using std::ofstream;
@@ -26,7 +27,7 @@ string SystemAdmin::getRole() const{
 
 void SystemAdmin::backup(University& uni, const std::string& filename) {
     std::ofstream file(filename);
-    if (!file.is_open()) return;
+    if (!file.is_open()) throw FileException(filename);
 
     // 1. University name
     file << "UNIVERSITY|" << uni.getName() << "\n";
@@ -87,7 +88,7 @@ void SystemAdmin::backup(University& uni, const std::string& filename) {
 
 void SystemAdmin::loadData(University& uni, const std::string& filename) {
     ifstream file(filename);
-    if (!file.is_open()) return;
+    if (!file.is_open()) throw FileException(filename);
 
     string line;
     Dormitory* currentDorm = nullptr;
@@ -175,7 +176,14 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
             while (getline(ss, studentIDStr, '|')){
                 User* u = uni.findUserByID(stoi(studentIDStr));
                 Student* s = dynamic_cast<Student*>(u);
-                if (s && r) r->addStudent(s);
+                if (s && r){
+                    try{
+                        r->addStudent(s);
+                    } catch (const UDRMSException& e){
+                        std::cerr << "Skipping student " << studentIDStr << ": " << e.what()<<endl;
+                    }
+                    
+                }
             }
 
             if (r) currentDorm->addRoom(r);

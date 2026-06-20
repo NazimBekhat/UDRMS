@@ -10,6 +10,7 @@
 #include "SystemAdmin.h"
 #include "User.h"
 #include "University.h"
+#include "Exceptions.h"
 
 #include <iostream>
 using namespace std;
@@ -37,8 +38,14 @@ int main(){
     dorm1.addStudentToRoom(s2,dorm1.getRoom(1)); //should fail
     dorm1.getRoom(1)->displayStudentsInRoom(); // should show only s1
 
-    dorm1.addStudentToRoom(s1,dorm1.getRoom(2));
-    dorm1.addStudentToRoom(s2,dorm1.getRoom(2)); //will work
+    // dorm1.addStudentToRoom(s1,dorm1.getRoom(2));
+    // dorm1.addStudentToRoom(s2,dorm1.getRoom(2)); //will work
+    try {
+        dorm1.addStudentToRoom(s1,dorm1.getRoom(2)); //should fail — s1 still in Room 1
+    } catch (const UDRMSException& e) {
+        cout << "Expected failure: " << e.what() << endl;
+    }
+    dorm1.addStudentToRoom(s2,dorm1.getRoom(2)); //will work — s2 not in any room yet
 
     dorm1.getRoom(2)->displayStudentsInRoom(); // should show s1 and s2
     
@@ -47,10 +54,36 @@ int main(){
     dorm1.removeRoom(3);
     cout << "Room 3 exists: " << (dorm1.getRoom(3) == nullptr ? "no" : "yes") << endl; // removed → nullptr
     
-    dorm1.getRoom(1)->removeStudent(1); // s1 leaves Room 1, inRoom → false
-    dorm1.addStudentToRoom(s1, dorm1.getRoom(2)); // now should succeed
-    dorm1.getRoom(2)->displayStudentsInRoom(); // should show s1 and s2
+    // dorm1.getRoom(1)->removeStudent(1); // s1 leaves Room 1, inRoom → false
+    // dorm1.addStudentToRoom(s1, dorm1.getRoom(2)); // now should succeed
+    // dorm1.getRoom(2)->displayStudentsInRoom(); // should show s1 and s2
 
+    try {
+        dorm1.addStudentToRoom(s1,dorm1.getRoom(1));
+    } catch (const UDRMSException& e) {
+        cout << "Unexpected failure: " << e.what() << endl;
+    }
+
+    try {
+        dorm1.addStudentToRoom(s2,dorm1.getRoom(1)); //should fail
+    } catch (const UDRMSException& e) {
+        cout << "Expected failure: " << e.what() << endl;
+    }
+    dorm1.getRoom(1)->displayStudentsInRoom(); // should show only s1
+
+    try {
+        dorm1.addStudentToRoom(s1,dorm1.getRoom(2)); //should fail now — s1 still in Room 1
+    } catch (const UDRMSException& e) {
+        cout << "Expected failure: " << e.what() << endl;
+    }
+
+    try {
+        dorm1.addStudentToRoom(s2,dorm1.getRoom(2)); //should fail — s2 already in Room 2
+    } catch (const UDRMSException& e) {
+        cout << "Expected failure: " << e.what() << endl;
+    }
+
+    dorm1.getRoom(2)->displayStudentsInRoom(); // should show only s2 at this point
 
     cout << "\n--- University + File Handling Test ---\n";
 
@@ -72,11 +105,20 @@ int main(){
 
     uni1.addDormitory(move(dorm1));
 
-    sysadmin1->backup(uni1, "../../data/test_backup.txt");
-    cout << "Backup written.\n";
+    try {
+        sysadmin1->backup(uni1, "../../data/test_backup.txt");
+        cout << "Backup written.\n";
+    } catch (const UDRMSException& e) {
+        cout << "Backup failed: " << e.what() << endl;
+    }
 
     University uni2("Placeholder");
-    sysadmin1->loadData(uni2, "../../data/test_backup.txt");
+
+    try {
+        sysadmin1->loadData(uni2, "../../data/test_backup.txt");
+    } catch (const UDRMSException& e) {
+        cout << "Load failed: " << e.what() << endl;
+    }
 
     cout<<"Loaded university name: "<<uni2.getName()<<endl;
     cout<<"Loaded user count: "<<uni2.getUsers().size()<<endl;

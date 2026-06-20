@@ -29,7 +29,6 @@ class StudentNotInRoomException: public UDRMSException{
         StudentNotInRoomException(int studentID);
 };
 
-
 class FileException: public UDRMSException{
     public:
         FileException(std::string filename);

@@ -1,14 +1,27 @@
 #include "Room.h"
 #include "Student.h"
+#include "Exceptions.h"
 #include <vector>
 using  std::vector;
 #include <string>
 using  std::string;
 
+static int validateRoomNumber(int roomNumber){
+    if (roomNumber <= 0) throw InvalidRoomNumberException(roomNumber);
+    return roomNumber;
+}
 
-Room::Room(int roomNumber, int capacity): roomNumber(roomNumber), capacity(capacity){}
+static int validateCapacity(int capacity){
+    if (capacity <= 0) throw InvalidCapacityException(capacity);
+    return capacity;
+}
+
+//static functions run first in initializer list
+
+Room::Room(int roomNumber, int capacity): roomNumber(validateRoomNumber(roomNumber)), capacity(validateCapacity(capacity)){}
 
 void Room::setRoomNumber(int roomNumber){
+    if (roomNumber<=0) throw InvalidRoomNumberException(roomNumber);
     this->roomNumber = roomNumber;
 }
 
@@ -16,8 +29,9 @@ int Room::getRoomNumber() const{
     return roomNumber;
 }
 
-void Room::setCapacity(int capcity){
-    this->capacity = capcity;
+void Room::setCapacity(int capacity){
+    if (roomNumber<=0) throw InvalidCapacityException(capacity);
+    this->capacity = capacity;
 }
 
 int Room::getCapacity() const{
@@ -25,11 +39,11 @@ int Room::getCapacity() const{
 }
 
 void Room::addStudent(Student* student){
-    if (isFull()) return;
+    if (student->getInRoom()) throw StudentAlreadyInRoomException(student->getStudentID());
     for (Student* s: students){
-        if (s==student) return; //return an exception after this
+        if (s==student) throw StudentAlreadyInRoomException(student->getStudentID());; //return an exception after this
     }
-    if (student->getInRoom()) return;
+    if (isFull()) throw RoomFullException(roomNumber, capacity);
     students.push_back(student);
     student->setInRoom(true);
 } //we add one student at a time then we pass 1 student
@@ -43,6 +57,7 @@ void Room::removeStudent(int studentID){
             return;
         }
     }
+    throw StudentNotInRoomException(studentID);
 } //remove by student ID to apply operator overloading
                 
 void Room::displayStudentsInRoom(){

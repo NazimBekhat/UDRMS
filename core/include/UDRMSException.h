@@ -2,9 +2,8 @@
 #define UDRMSEXCEPTION_H
 
 #include <stdexcept>
-using std::runtime_error;
-
-class UDRMSException: public runtime_error{
+#include <string>
+class UDRMSException: public std::runtime_error{
     public:
         UDRMSException(const std::string message);
 };

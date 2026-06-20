@@ -19,7 +19,7 @@ LoginScreen::~LoginScreen()
 
 void LoginScreen::onLoginClicked()
 {
-    std::string username = ui->usernamelineEdit->text().toStdString(); //since lineedit->teext() gives qtstring
+    std::string username = ui->usernameLineEdit->text().toStdString();
     std::string password = ui->passwordLineEdit->text().toStdString();
 
     User* user = university->findUserByUsername(username);
@@ -30,5 +30,4 @@ void LoginScreen::onLoginClicked()
     }
 
     emit loginSucceeded(user);
-
 }

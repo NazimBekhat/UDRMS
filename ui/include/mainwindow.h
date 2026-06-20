@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+class University;
+class LoginScreen;
+class User;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -14,10 +18,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(University* university, QWidget *parent = nullptr);
     ~MainWindow() override;
+
+private slots:
+    void onLoginSucceeded(User* user);
 
 private:
     Ui::MainWindow *ui;
+    University* university;
+    LoginScreen* loginScreen;
 };
 #endif // MAINWINDOW_H

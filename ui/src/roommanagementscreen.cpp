@@ -10,6 +10,10 @@
 #include "SystemAdmin.h"
 #include "Administrator.h"
 #include "Staff.h"
+#include "SingleRoom.h"
+#include "DoubleRoom.h"
+#include "SharedRoom.h"
+#include <QInputDialog>
 #include <QMessageBox>
 
 RoomManagementScreen::RoomManagementScreen(University* university, QWidget *parent)
@@ -28,6 +32,8 @@ RoomManagementScreen::RoomManagementScreen(University* university, QWidget *pare
     connect(ui->removeButton, &QPushButton::clicked, this, &RoomManagementScreen::onRemoveClicked);
     connect(ui->backButton, &QPushButton::clicked, this, &RoomManagementScreen::requestBack);
     connect(ui->saveMenuButton, &QPushButton::clicked, this, &RoomManagementScreen::onSaveMenuClicked);
+    connect(ui->addDormitoryButton, &QPushButton::clicked, this, &RoomManagementScreen::onAddDormitoryClicked);
+    connect(ui->addRoomButton, &QPushButton::clicked, this, &RoomManagementScreen::onAddRoomClicked);
 }
 
 RoomManagementScreen::~RoomManagementScreen() { delete ui; }
@@ -195,4 +201,61 @@ void RoomManagementScreen::onSaveMenuClicked()
     restaurant.setDinnerMenu(ui->dinnerMenuLineEdit->text().toStdString());
 
     QMessageBox::information(this, "Menu Updated", "Restaurant menu saved.");
+}
+
+void RoomManagementScreen::onAddDormitoryClicked()
+{
+    if (!(dynamic_cast<Administrator*>(currentUser) || dynamic_cast<SystemAdmin*>(currentUser))) {
+        QMessageBox::warning(this, "Permission Denied", "You don't have permission to do this.");
+        return;
+    }
+
+    bool ok = false;
+    QString name = QInputDialog::getText(this, "Add Dormitory", "Dormitory name:", QLineEdit::Normal, "", &ok);
+    if (!ok || name.trimmed().isEmpty()) return;
+
+    university->addDormitory(Dormitory(name.toStdString()));
+    populateDormitoryList();
+    QMessageBox::information(this, "Success", "Dormitory added.");
+}
+
+void RoomManagementScreen::onAddRoomClicked()
+{
+    if (!(dynamic_cast<Administrator*>(currentUser) || dynamic_cast<SystemAdmin*>(currentUser))) {
+        QMessageBox::warning(this, "Permission Denied", "You don't have permission to do this.");
+        return;
+    }
+    if (currentDormitoryIndex < 0) {
+        QMessageBox::warning(this, "No Dormitory Selected", "Please select a dormitory first.");
+        return;
+    }
+
+    QStringList types = {"Single Room", "Double Room", "Shared Room"};
+    bool ok = false;
+    QString type = QInputDialog::getItem(this, "Add Room", "Room type:", types, 0, false, &ok);
+    if (!ok) return;
+
+    bool numOk = false;
+    int roomNumber = QInputDialog::getInt(this, "Add Room", "Room number:", 1, 1, 9999, 1, &numOk);
+    if (!numOk) return;
+
+    Room* newRoom = nullptr;
+    try {
+        if (type == "Single Room") newRoom = new SingleRoom(roomNumber);
+        else if (type == "Double Room") newRoom = new DoubleRoom(roomNumber);
+        else if (type == "Shared Room") {
+            bool capOk = false;
+            int capacity = QInputDialog::getInt(this, "Add Room", "Capacity (3-4):", 3, 3, 4, 1, &capOk);
+            if (!capOk) return;
+            newRoom = new SharedRoom(roomNumber, capacity);
+        }
+
+        Dormitory& dorm = university->getDormitories()[currentDormitoryIndex];
+        dorm.addRoom(newRoom);
+        populateRoomList();
+        QMessageBox::information(this, "Success", "Room added.");
+    } catch (const UDRMSException& e) {
+        delete newRoom;   // avoid leak if addRoom throws or construction throws after allocation
+        QMessageBox::warning(this, "Add Room Failed", e.what());
+    }
 }

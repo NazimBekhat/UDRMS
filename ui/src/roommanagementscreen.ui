@@ -25,6 +25,20 @@
     <widget class="QComboBox" name="dormitoryComboBox"/>
    </item>
    <item>
+    <widget class="QPushButton" name="addDormitoryButton">
+     <property name="text">
+      <string>Add a dormitory</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="addRoomButton">
+     <property name="text">
+      <string>Add a room</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QListWidget" name="roomsListWidget"/>
    </item>
    <item>

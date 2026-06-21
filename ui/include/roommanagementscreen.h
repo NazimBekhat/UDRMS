@@ -30,6 +30,8 @@ private slots:
     void onAssignClicked();
     void onRemoveClicked();
     void onSaveMenuClicked();
+    void onAddDormitoryClicked();
+    void onAddRoomClicked();
 
 private:
     void populateDormitoryList();

@@ -24,6 +24,7 @@ signals:
     void requestRoomManagement();
     void requestRestaurantMenu();
     void requestLogout();
+    void requestCreateUser();  
 
 private slots:
     void onBackupClicked();

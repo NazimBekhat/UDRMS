@@ -6,6 +6,7 @@
 #include "loginscreen.h"
 #include "dashboardscreen.h"
 #include "roommanagementscreen.h"
+#include "createuserscreen.h"
 
 MainWindow::MainWindow(University* university, QWidget *parent)
     : QMainWindow(parent)
@@ -17,10 +18,12 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     loginScreen = new LoginScreen(university, this);
     dashboardScreen = new DashboardScreen(university, this);
     roomManagementScreen = new RoomManagementScreen(university, this);
+    createUserScreen = new CreateUserScreen(university, this); 
 
     ui->stackedWidget->addWidget(loginScreen);
     ui->stackedWidget->addWidget(dashboardScreen);
     ui->stackedWidget->addWidget(roomManagementScreen);
+    ui->stackedWidget->addWidget(createUserScreen);
 
     ui->stackedWidget->setCurrentWidget(loginScreen);
 
@@ -29,6 +32,8 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     connect(dashboardScreen, &DashboardScreen::requestRestaurantMenu, this, &MainWindow::onRequestRoomManagement);
     connect(roomManagementScreen, &RoomManagementScreen::requestBack, this, &MainWindow::onRequestBackToDashboard);
     connect(dashboardScreen, &DashboardScreen::requestLogout, this, &MainWindow::onLogout);
+    connect(dashboardScreen, &DashboardScreen::requestCreateUser, this, &MainWindow::onRequestCreateUser);
+    connect(createUserScreen, &CreateUserScreen::requestBack, this, &MainWindow::onRequestBackToDashboard);
 }
 
 MainWindow::~MainWindow()
@@ -39,9 +44,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::onLoginSucceeded(User* user)
 {
+    loggedInUser = user;  
     dashboardScreen->setUser(user);
     roomManagementScreen->setUser(user);
     ui->stackedWidget->setCurrentWidget(dashboardScreen);
+}
+
+void MainWindow::onRequestCreateUser()
+{
+    createUserScreen->setUser(loggedInUser); 
+    ui->stackedWidget->setCurrentWidget(createUserScreen);
 }
 
 void MainWindow::onRequestRoomManagement()

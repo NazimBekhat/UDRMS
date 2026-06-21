@@ -8,6 +8,7 @@ class LoginScreen;
 class DashboardScreen;
 class RoomManagementScreen;
 class User;
+class CreateUserScreen; 
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +29,7 @@ private slots:
     void onRequestRoomManagement();
     void onRequestBackToDashboard();
     void onLogout(); 
+    void onRequestCreateUser();  
 
 private:
     Ui::MainWindow *ui;
@@ -35,5 +37,7 @@ private:
     LoginScreen* loginScreen;
     DashboardScreen* dashboardScreen;
     RoomManagementScreen* roomManagementScreen;
+    CreateUserScreen* createUserScreen;  
+    User* loggedInUser; 
 };
 #endif // MAINWINDOW_H

@@ -2,6 +2,7 @@
 #include "ui_dashboardscreen.h"
 #include "University.h"
 #include "User.h"
+#include "Administrator.h"
 #include "SystemAdmin.h"
 #include "Exceptions.h"
 #include <QMessageBox>
@@ -15,6 +16,7 @@ DashboardScreen::DashboardScreen(University* university, QWidget *parent)
     connect(ui->backupButton, &QPushButton::clicked, this, &DashboardScreen::onBackupClicked);
     connect(ui->loadButton, &QPushButton::clicked, this, &DashboardScreen::onLoadClicked);
     connect(ui->logoutButton, &QPushButton::clicked, this, &DashboardScreen::requestLogout); 
+    connect(ui->createUserButton, &QPushButton::clicked, this, &DashboardScreen::requestCreateUser);
 }
 
 DashboardScreen::~DashboardScreen() { delete ui; }
@@ -28,6 +30,9 @@ void DashboardScreen::setUser(User* user)
     bool isSysAdmin = (dynamic_cast<SystemAdmin*>(user) != nullptr);
     ui->backupButton->setVisible(isSysAdmin);
     ui->loadButton->setVisible(isSysAdmin);
+
+    bool canCreateUsers = isSysAdmin || (dynamic_cast<Administrator*>(user) != nullptr);
+    ui->createUserButton->setVisible(canCreateUsers);
 }
 
 void DashboardScreen::onBackupClicked()

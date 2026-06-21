@@ -13,17 +13,20 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="welcomeLabel">
-       <property name="text">
-        <string>welcomeLabel</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QLabel" name="welcomeLabel">
+     <property name="text">
+      <string>welcomeLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="createUserButton">
+     <property name="text">
+      <string>Create a user</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="restaurantMenuButton">

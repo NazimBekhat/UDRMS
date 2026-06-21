@@ -19,7 +19,7 @@ public:
     explicit RoomManagementScreen(University* university, QWidget *parent = nullptr);
     ~RoomManagementScreen();
 
-    void refresh();   //we call this function everytime we display this screen
+    void refresh();
     void setUser(User* user);   
 signals:
     void requestBack();

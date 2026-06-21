@@ -87,12 +87,3 @@ void MainWindow::onDataLoaded(QString username)
     roomManagementScreen->setUser(freshUser);
     ui->stackedWidget->setCurrentWidget(dashboardScreen);
 }
-
-void applyShadow(QWidget* widget)
-{
-    auto* shadow = new QGraphicsDropShadowEffect(widget);
-    shadow->setBlurRadius(8);
-    shadow->setOffset(0, 2);
-    shadow->setColor(QColor(0, 0, 0, 160));
-    widget->setGraphicsEffect(shadow);
-}

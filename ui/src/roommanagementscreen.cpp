@@ -71,10 +71,10 @@ void RoomManagementScreen::populateRoomList()
 
     for (Room* room : dorm.getRooms()) {
         QString label = QString("Room %1 (%2) - %3/%4")
-            .arg(room->getRoomNumber()) //in %1
-            .arg(QString::fromStdString(room->getType())) //int 2
-            .arg(room->getStudents().size()) // %3
-            .arg(room->getCapacity()); // %4, all based on what the functions return
+            .arg(room->getRoomNumber())
+            .arg(QString::fromStdString(room->getType()))
+            .arg(room->getStudents().size())
+            .arg(room->getCapacity());
         ui->roomsListWidget->addItem(label);
     }
 }
@@ -267,7 +267,7 @@ void RoomManagementScreen::onAddRoomClicked()
         populateRoomList();
         QMessageBox::information(this, "Success", "Room added.");
     } catch (const UDRMSException& e) {
-        delete newRoom;   // avoid leak if addRoom throws or construction throws after allocation
+        delete newRoom;
         QMessageBox::warning(this, "Add Room Failed", e.what());
     }
 }

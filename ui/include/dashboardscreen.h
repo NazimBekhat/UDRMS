@@ -37,4 +37,4 @@ private:
     User* currentUser;
 };
 
-#endif // DASHBOARDSCREEN_H
+#endif

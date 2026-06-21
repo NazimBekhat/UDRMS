@@ -9,13 +9,12 @@
 #include <QCoreApplication>
 #include <QDir>
 
-// Add this helper function near the top of the file, outside the class methods
 static QString getBackupFilePath()
 {
     QString dirPath = QCoreApplication::applicationDirPath() + "/data";
     QDir dir(dirPath);
     if (!dir.exists()) {
-        dir.mkpath(".");   // creates the folder if it doesn't exist yet
+        dir.mkpath(".");   
     }
     return dirPath + "/backup.txt";
 }

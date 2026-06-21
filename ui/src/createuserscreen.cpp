@@ -41,7 +41,6 @@ void CreateUserScreen::setUser(User* user)
         ui->roleComboBox->addItem("Staff");
         ui->roleComboBox->addItem("Student");
     }
-    // Staff/Student: combo box stays empty since they have no roles in creating users
 
     onRoleChanged(0);
 }

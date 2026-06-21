@@ -17,7 +17,7 @@ public:
     explicit CreateUserScreen(University* university, QWidget *parent = nullptr);
     ~CreateUserScreen();
 
-    void setUser(User* user);   //who is currently logged in
+    void setUser(User* user); 
 
 signals:
     void requestBack();

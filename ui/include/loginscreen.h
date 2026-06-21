@@ -30,4 +30,4 @@ private:
     University* university;
 };
 
-#endif // LOGINSCREEN_H
+#endif

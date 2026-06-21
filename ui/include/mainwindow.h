@@ -41,4 +41,4 @@ private:
     CreateUserScreen* createUserScreen;  
     User* loggedInUser; 
 };
-#endif // MAINWINDOW_H
+#endif

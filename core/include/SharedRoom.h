@@ -7,7 +7,7 @@ using  std::string;
 
 class SharedRoom: public Room{
     public:
-        SharedRoom(int roomNumber, int capacity); //if <= 2 we throw and exception
+        SharedRoom(int roomNumber, int capacity);
         virtual string getType() const override;
 };
 

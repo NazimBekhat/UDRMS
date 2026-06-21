@@ -31,14 +31,14 @@
    <item>
     <widget class="QPushButton" name="restaurantMenuButton">
      <property name="text">
-      <string>RestauButton</string>
+      <string>Check restaurant informations</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="roomManagementButton">
      <property name="text">
-      <string>RoomButton</string>
+      <string>Check rooms/dorms infromations</string>
      </property>
     </widget>
    </item>

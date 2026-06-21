@@ -6,6 +6,7 @@
 #include "Staff.h"
 #include "Administrator.h"
 #include "SystemAdmin.h"
+#include "uihelpers.h"
 #include <QMessageBox>
 
 CreateUserScreen::CreateUserScreen(University* university, QWidget *parent)
@@ -15,6 +16,11 @@ CreateUserScreen::CreateUserScreen(University* university, QWidget *parent)
     , currentUser(nullptr)
 {
     ui->setupUi(this);
+    applyShadow(ui->usernameLineEdit);
+    applyShadow(ui->passwordLineEdit);
+    applyShadow(ui->fullNameLineEdit);
+    applyShadow(ui->idLineEdit);
+    applyShadow(ui->extraFieldLineEdit);
     connect(ui->roleComboBox, &QComboBox::currentIndexChanged, this, &CreateUserScreen::onRoleChanged);
     connect(ui->createButton, &QPushButton::clicked, this, &CreateUserScreen::onCreateClicked);
     connect(ui->backButton, &QPushButton::clicked, this, &CreateUserScreen::requestBack);

@@ -12,7 +12,7 @@ class Room{
     private:
         int roomNumber;
         int capacity;
-        vector<Student*> students; //use by ref since if we use by value then the room owns the students.
+        vector<Student*> students; 
     public:
         Room(int roomNumber, int capacity);
         virtual ~Room()=default;
@@ -25,8 +25,8 @@ class Room{
         const std::vector<Student*>& getStudents() const;
 
 
-        void addStudent(Student* student); //we add one student at a time then we pass 1 student
-        void removeStudent(int studentID); //remove by student ID to apply operator overloading
+        void addStudent(Student* student); 
+        void removeStudent(int studentID); 
         virtual string getType()const=0;
         void displayStudentsInRoom();
         bool isFull() const;

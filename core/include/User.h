@@ -2,7 +2,7 @@
 #define USER_H
 
 #include <string>
-using std::string; //we needed jsut string so no need to impotr the whole library
+using std::string;
 
 class User{
     private:
@@ -11,15 +11,14 @@ class User{
         string fullName;
     public:
         User(const string& username, const string& password,const string& fullName);
-        virtual ~User()=default; //so when we delete a list of pointers of type user it uses the correct destructor of the object
+        virtual ~User()=default; 
 
-        virtual bool login(const string& inputPassword); //virtual
-        virtual string getRole()const =0; //pure virtual, const sicne it should be called by non const objects
+        virtual bool login(const string& inputPassword);
+        virtual string getRole()const =0;
 
         void setUsername(const string& username);
         string getUsername() const;
         void setPassword(const string& password);
-        //string getPassword() const;
         void setFullName(const string& fullName);
         string getFullName() const;
 };

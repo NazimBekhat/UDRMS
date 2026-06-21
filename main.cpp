@@ -15,6 +15,43 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setStyleSheet(R"(
+        QWidget {
+            background-color: #0f1115;
+            color: #e6e6e6;
+            font-size: 13px;
+        }
+        QLineEdit, QComboBox, QListWidget {
+            background-color: #1a1d24;
+            border: 1px solid #2a2e38;
+            border-radius: 4px;
+            padding: 6px;
+            color: #e6e6e6;
+        }
+        QLineEdit:focus, QComboBox:focus {
+            border: 1px solid #4a9eea;
+        }
+        QPushButton {
+            background-color: #1a1d24;
+            border: 1px solid #2a2e38;
+            border-radius: 4px;
+            padding: 8px;
+            color: #e6e6e6;
+        }
+        QPushButton:hover {
+            background-color: #232730;
+        }
+        QPushButton:pressed {
+            background-color: #4a9eea;
+            color: #0f1115;
+        }
+        QLabel {
+            color: #c9ccd1;
+        }
+        QMessageBox {
+            background-color: #1a1d24;
+        }
+    )");
 
     University university("ENSIA");
     university.addUser(new Student("nazim_bekhat", "nazim", 1, "Nazim Bekhat", "25/26"));

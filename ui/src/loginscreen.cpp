@@ -2,6 +2,7 @@
 #include "ui_loginscreen.h"
 #include "University.h"
 #include "User.h"
+#include "uihelpers.h"
 #include <QMessageBox>
 
 LoginScreen::LoginScreen(University* university,QWidget *parent)
@@ -9,6 +10,8 @@ LoginScreen::LoginScreen(University* university,QWidget *parent)
     , ui(new Ui::LoginScreen), university(university)
 {
     ui->setupUi(this);
+    applyShadow(ui->usernameLineEdit);
+    applyShadow(ui->passwordLineEdit);
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginScreen::onLoginClicked);
 }
 

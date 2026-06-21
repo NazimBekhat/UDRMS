@@ -1,12 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QMessageBox>
 #include "University.h"
 #include "User.h"
 #include "loginscreen.h"
 #include "dashboardscreen.h"
 #include "roommanagementscreen.h"
 #include "createuserscreen.h"
+#include <QGraphicsDropShadowEffect>
+#include <QMessageBox>
+
 
 MainWindow::MainWindow(University* university, QWidget *parent)
     : QMainWindow(parent)
@@ -84,4 +86,13 @@ void MainWindow::onDataLoaded(QString username)
     dashboardScreen->setUser(freshUser);
     roomManagementScreen->setUser(freshUser);
     ui->stackedWidget->setCurrentWidget(dashboardScreen);
+}
+
+void applyShadow(QWidget* widget)
+{
+    auto* shadow = new QGraphicsDropShadowEffect(widget);
+    shadow->setBlurRadius(8);
+    shadow->setOffset(0, 2);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    widget->setGraphicsEffect(shadow);
 }

@@ -13,6 +13,7 @@
 #include "SingleRoom.h"
 #include "DoubleRoom.h"
 #include "SharedRoom.h"
+#include "uihelpers.h"
 #include <QInputDialog>
 #include <QMessageBox>
 
@@ -25,6 +26,10 @@ RoomManagementScreen::RoomManagementScreen(University* university, QWidget *pare
     , currentUser(nullptr)
 {
     ui->setupUi(this);
+    applyShadow(ui->studentIdLineEdit);
+    applyShadow(ui->breakfastMenuLineEdit);
+    applyShadow(ui->lunchMenuLineEdit);
+    applyShadow(ui->dinnerMenuLineEdit);
 
     connect(ui->dormitoryComboBox, &QComboBox::currentIndexChanged, this, &RoomManagementScreen::onDormitoryChanged);
     connect(ui->roomsListWidget, &QListWidget::currentRowChanged, this, &RoomManagementScreen::onRoomSelected);

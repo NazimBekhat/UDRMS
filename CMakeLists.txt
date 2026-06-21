@@ -32,8 +32,9 @@ qt_add_executable(UDRMS
     ui/src/roommanagementscreen.cpp 
     ui/src/roommanagementscreen.ui
     ui/include/createuserscreen.h
-     ui/src/createuserscreen.cpp
-      ui/src/createuserscreen.ui
+    ui/src/createuserscreen.cpp
+    ui/src/createuserscreen.ui
+    ui/include/uihelpers.h
 )
 target_include_directories(UDRMS PRIVATE
     core/include

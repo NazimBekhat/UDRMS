@@ -15,14 +15,15 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="welcomeLabel">
-     <property name="text">
-      <string>welcomeLabel</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout"/>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="welcomeLabel">
+       <property name="text">
+        <string>welcomeLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QPushButton" name="restaurantMenuButton">
@@ -49,6 +50,13 @@
     <widget class="QPushButton" name="backupButton">
      <property name="text">
       <string>Backup</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="logoutButton">
+     <property name="text">
+      <string>Logout</string>
      </property>
     </widget>
    </item>

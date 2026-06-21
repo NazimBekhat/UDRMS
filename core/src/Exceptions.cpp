@@ -16,6 +16,10 @@ StudentAlreadyInRoomException::StudentAlreadyInRoomException(int studentID)
 :UDRMSException("Student: " + std::to_string(studentID) + " is already in a room")
 {}
 
+RoomNotEmptyException::RoomNotEmptyException(int roomNumber)
+:UDRMSException("Room " + std::to_string(roomNumber) + " is not empty")
+{}
+
 StudentNotInRoomException::StudentNotInRoomException(int studentID)
 :UDRMSException("Student: " + std::to_string(studentID) + " is not in the room")
 {}

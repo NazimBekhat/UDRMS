@@ -28,6 +28,9 @@ qt_add_executable(UDRMS
     ui/include/dashboardscreen.h
     ui/src/dashboardscreen.cpp
     ui/src/dashboardscreen.ui
+    ui/include/roommanagementscreen.h 
+    ui/src/roommanagementscreen.cpp 
+    ui/src/roommanagementscreen.ui
 )
 target_include_directories(UDRMS PRIVATE
     core/include

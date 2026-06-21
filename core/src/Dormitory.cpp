@@ -1,5 +1,6 @@
 #include "Dormitory.h"
 #include "Room.h"
+#include "Exceptions.h"
 #include <algorithm>
 using std::remove;
 
@@ -30,7 +31,7 @@ void Dormitory::addRoom(Room* room){
 void Dormitory::removeRoom(int roomNumber){
     Room* room = getRoom(roomNumber);
     if (room == nullptr) return; //throw
-    if (!room->isEmpty()) return; //throw
+    if (!room->isEmpty()) throw RoomNotEmptyException(roomNumber); //throw
     rooms.erase(remove(rooms.begin(), rooms.end(), room), rooms.end());
     delete room;
 
@@ -47,8 +48,8 @@ void Dormitory::removeRoom(int roomNumber){
 void Dormitory::addStudentToRoom(Student* student,Room* room){
     if (student == nullptr) return; //throw
     if (room == nullptr) return; //throw
-    if (getRoom(room->getRoomNumber()) == nullptr) return; //throw
-    if (room->isFull()) return; //throw
+    if (getRoom(room->getRoomNumber()) == nullptr) throw InvalidRoomNumberException(room->getRoomNumber()); //throw
+    if (room->isFull()) throw RoomFullException(room->getRoomNumber(), room->getCapacity()); //throw
     room->addStudent(student);
 }
 

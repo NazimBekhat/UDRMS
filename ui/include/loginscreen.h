@@ -16,6 +16,7 @@ class LoginScreen : public QWidget
 
 public:
     explicit LoginScreen(University* university,QWidget *parent = nullptr);
+    void clearFields();
     ~LoginScreen();
 
 signals:

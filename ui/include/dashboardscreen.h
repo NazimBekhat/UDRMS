@@ -23,6 +23,7 @@ public:
 signals:
     void requestRoomManagement();
     void requestRestaurantMenu();
+    void requestLogout();
 
 private slots:
     void onBackupClicked();

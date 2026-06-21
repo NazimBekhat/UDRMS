@@ -6,6 +6,7 @@
 class University;
 class LoginScreen;
 class DashboardScreen;
+class RoomManagementScreen;
 class User;
 
 QT_BEGIN_NAMESPACE
@@ -24,11 +25,15 @@ public:
 
 private slots:
     void onLoginSucceeded(User* user);
+    void onRequestRoomManagement();
+    void onRequestBackToDashboard();
+    void onLogout(); 
 
 private:
     Ui::MainWindow *ui;
     University* university;
     LoginScreen* loginScreen;
     DashboardScreen* dashboardScreen;
+    RoomManagementScreen* roomManagementScreen;
 };
 #endif // MAINWINDOW_H

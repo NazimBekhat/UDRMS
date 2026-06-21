@@ -13,46 +13,46 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>222</width>
-     <height>111</height>
+     <width>144</width>
+     <height>140</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="passwordLineEdit">
-      <property name="echoMode">
-       <enum>QLineEdit::EchoMode::Password</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="loginButton">
-      <property name="text">
-       <string>Login</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="passwordLabel">
-      <property name="text">
-       <string>Password:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
      <widget class="QLabel" name="Username">
       <property name="text">
        <string>Username:</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item>
      <widget class="QLineEdit" name="usernameLineEdit"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="passwordLabel">
+      <property name="text">
+       <string>Password:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="passwordLineEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::EchoMode::Password</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="loginButton">
+      <property name="text">
+       <string>Login</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

@@ -12,6 +12,12 @@ LoginScreen::LoginScreen(University* university,QWidget *parent)
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginScreen::onLoginClicked);
 }
 
+void LoginScreen::clearFields()
+{
+    ui->usernameLineEdit->clear();
+    ui->passwordLineEdit->clear();
+}
+
 LoginScreen::~LoginScreen()
 {
     delete ui;

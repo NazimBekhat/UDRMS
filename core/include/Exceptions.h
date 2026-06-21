@@ -34,6 +34,10 @@ class FileException: public UDRMSException{
         FileException(std::string filename);
 };
 
+class RoomNotEmptyException: public UDRMSException{
+    public:
+        RoomNotEmptyException(int roomNumber);
+};
 
 
 #endif

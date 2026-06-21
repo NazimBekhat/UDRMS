@@ -14,6 +14,7 @@ DashboardScreen::DashboardScreen(University* university, QWidget *parent)
     connect(ui->restaurantMenuButton, &QPushButton::clicked, this, &DashboardScreen::requestRestaurantMenu);
     connect(ui->backupButton, &QPushButton::clicked, this, &DashboardScreen::onBackupClicked);
     connect(ui->loadButton, &QPushButton::clicked, this, &DashboardScreen::onLoadClicked);
+    connect(ui->logoutButton, &QPushButton::clicked, this, &DashboardScreen::requestLogout); 
 }
 
 DashboardScreen::~DashboardScreen() { delete ui; }

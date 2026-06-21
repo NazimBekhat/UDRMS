@@ -39,7 +39,7 @@ void DashboardScreen::onBackupClicked()
 {
     SystemAdmin* admin = dynamic_cast<SystemAdmin*>(currentUser);
     try {
-        admin->backup(*university, "../../data/backup.txt");
+        admin->backup(*university, "/home/bekhat-nazim/Documents/ENSIA/ENSIA-DOCS/1YS2/OOP/OOPproject/UDRMS/data/backup.txt");
         QMessageBox::information(this, "Backup", "Backup saved successfully.");
     } catch (const UDRMSException& e) {
         QMessageBox::warning(this, "Backup Failed", e.what());
@@ -50,7 +50,7 @@ void DashboardScreen::onLoadClicked()
 {
     SystemAdmin* admin = dynamic_cast<SystemAdmin*>(currentUser);
     try {
-        admin->loadData(*university, "../../data/backup.txt");
+        admin->loadData(*university, "/home/bekhat-nazim/Documents/ENSIA/ENSIA-DOCS/1YS2/OOP/OOPproject/UDRMS/data/backup.txt");
         QMessageBox::information(this, "Load", "Data loaded successfully.");
     } catch (const UDRMSException& e) {
         QMessageBox::warning(this, "Load Failed", e.what());

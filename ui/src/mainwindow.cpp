@@ -34,6 +34,7 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     connect(dashboardScreen, &DashboardScreen::requestLogout, this, &MainWindow::onLogout);
     connect(dashboardScreen, &DashboardScreen::requestCreateUser, this, &MainWindow::onRequestCreateUser);
     connect(createUserScreen, &CreateUserScreen::requestBack, this, &MainWindow::onRequestBackToDashboard);
+    connect(dashboardScreen, &DashboardScreen::dataLoaded, this, &MainWindow::onDataLoaded);
 }
 
 MainWindow::~MainWindow()
@@ -71,4 +72,15 @@ void MainWindow::onLogout()
 {
     loginScreen->clearFields();
     ui->stackedWidget->setCurrentWidget(loginScreen);
+}
+
+void MainWindow::onDataLoaded(QString username)
+{
+    User* freshUser = university->findUserByUsername(username.toStdString());
+    if (freshUser == nullptr) return;
+
+    loggedInUser = freshUser;
+    dashboardScreen->setUser(freshUser);
+    roomManagementScreen->setUser(freshUser);
+    ui->stackedWidget->setCurrentWidget(dashboardScreen);
 }

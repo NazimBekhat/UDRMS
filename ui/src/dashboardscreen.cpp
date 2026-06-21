@@ -63,9 +63,11 @@ void DashboardScreen::onBackupClicked()
 void DashboardScreen::onLoadClicked()
 {
     SystemAdmin* admin = dynamic_cast<SystemAdmin*>(currentUser);
+    QString username = QString::fromStdString(currentUser->getUsername());
     try {
         admin->loadData(*university, getBackupFilePath().toStdString());
         QMessageBox::information(this, "Load", "Data loaded successfully.");
+        emit dataLoaded(username);
     } catch (const UDRMSException& e) {
         QMessageBox::warning(this, "Load Failed", e.what());
     }

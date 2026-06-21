@@ -75,3 +75,11 @@ User* University::findUserByUsername(const string& username){
     }
     return nullptr;
 }
+
+void University::clearAll(){
+    for (User* u : users) {
+        delete u;
+    }
+    users.clear();
+    dormitories.clear();
+}

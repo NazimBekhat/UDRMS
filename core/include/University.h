@@ -27,6 +27,7 @@ class University{
         vector<Dormitory>& getDormitories();
 
         void addUser(User* user);
+        void clearAll();
         void removeUser(User* user);
         void addDormitory(Dormitory&& dormitory); //When you write addDormitory(Dormitory dormitory) — pass by value — the compiler needs to construct that local copy from whatever you pass in.
         //If you pass a temporary: university.addDormitory(Dormitory("Block A", 5)); Constructing that local copy = invoking the copy constructor. Copy is deleted → compile error.

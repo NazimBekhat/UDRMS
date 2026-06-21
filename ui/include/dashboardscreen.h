@@ -24,7 +24,8 @@ signals:
     void requestRoomManagement();
     void requestRestaurantMenu();
     void requestLogout();
-    void requestCreateUser();  
+    void requestCreateUser(); 
+    void dataLoaded(QString username);  
 
 private slots:
     void onBackupClicked();

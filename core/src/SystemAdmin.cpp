@@ -90,6 +90,8 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
     ifstream file(filename);
     if (!file.is_open()) throw FileException(filename);
 
+    uni.clearAll();
+    
     string line;
     Dormitory* currentDorm = nullptr;
 

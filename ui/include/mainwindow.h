@@ -30,6 +30,7 @@ private slots:
     void onRequestBackToDashboard();
     void onLogout(); 
     void onRequestCreateUser();  
+    void onDataLoaded(QString username); 
 
 private:
     Ui::MainWindow *ui;

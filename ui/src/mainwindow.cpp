@@ -13,6 +13,7 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     , ui(new Ui::MainWindow)
     , university(university)
 {
+    setWindowTitle("UDRMS — University Dormitory & Restaurant Management");
     ui->setupUi(this);
 
     loginScreen = new LoginScreen(university, this);

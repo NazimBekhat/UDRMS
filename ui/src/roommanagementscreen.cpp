@@ -214,6 +214,13 @@ void RoomManagementScreen::onAddDormitoryClicked()
     QString name = QInputDialog::getText(this, "Add Dormitory", "Dormitory name:", QLineEdit::Normal, "", &ok);
     if (!ok || name.trimmed().isEmpty()) return;
 
+    for (const Dormitory& d : university->getDormitories()) {
+    if (d.getName() == name.toStdString()) {
+        QMessageBox::warning(this, "Duplicate Name", "A dormitory with that name already exists.");
+        return;
+    }
+}
+
     university->addDormitory(Dormitory(name.toStdString()));
     populateDormitoryList();
     QMessageBox::information(this, "Success", "Dormitory added.");

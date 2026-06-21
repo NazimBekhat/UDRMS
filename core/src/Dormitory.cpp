@@ -24,7 +24,7 @@ Restaurant& Dormitory::getRestaurant(){
 
 void Dormitory::addRoom(Room* room){
     if (room == nullptr) return; //throw later
-    if (getRoom(room->getRoomNumber()) != nullptr) InvalidRoomNumberException(room->getRoomNumber()); //have to be non duplicate, thow
+    if (getRoom(room->getRoomNumber()) != nullptr) throw InvalidRoomNumberException(room->getRoomNumber()); //have to be non duplicate, thow
     rooms.push_back(room);
 }
 

@@ -82,4 +82,4 @@ CMakeLists.txt.user*
 .uic/
 /build*/
 /.qtcreator/
-data/
+data/*

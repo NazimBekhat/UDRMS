@@ -1,9 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include "loginscreen.h"
 #include "University.h"
 #include "User.h"
+#include "loginscreen.h"
+#include "dashboardscreen.h"
 
 MainWindow::MainWindow(University* university, QWidget *parent)
     : QMainWindow(parent)
@@ -13,7 +14,10 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     ui->setupUi(this);
 
     loginScreen = new LoginScreen(university, this);
+    DashboardScreen = new DashboardScreen(university, this);
     ui->stackedWidget->addWidget(loginScreen);
+    ui->stackedWidget->addWidget(DashboardScreen);
+
     ui->stackedWidget->setCurrentWidget(loginScreen);
 
     connect(loginScreen, &LoginScreen::loginSucceeded, this, &MainWindow::onLoginSucceeded);
@@ -27,6 +31,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::onLoginSucceeded(User* user)
 {
-    QMessageBox::information(this, "Login Successful", QString::fromStdString(user->getFullName()));
-    // TODO: switch to dashboard once it exists, passing `user` along
+    dashboardScreen->setUser(user);
+    ui->stackedWidget->setCurrentWidget(dashboardScreen);
 }

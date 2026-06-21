@@ -5,6 +5,7 @@
 
 class University;
 class LoginScreen;
+class DashboardScreen;
 class User;
 
 QT_BEGIN_NAMESPACE
@@ -28,5 +29,6 @@ private:
     Ui::MainWindow *ui;
     University* university;
     LoginScreen* loginScreen;
+    DashboardScreen* dashboardScreen;
 };
 #endif // MAINWINDOW_H

@@ -25,6 +25,9 @@ qt_add_executable(UDRMS
     core/src/University.cpp
     core/src/UDRMSException.cpp
     core/src/Exceptions.cpp
+    ui/include/dashboardscreen.h
+    ui/src/dashboardscreen.cpp
+    ui/src/dashboardscreen.ui
 )
 target_include_directories(UDRMS PRIVATE
     core/include

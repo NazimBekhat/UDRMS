@@ -14,9 +14,9 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     ui->setupUi(this);
 
     loginScreen = new LoginScreen(university, this);
-    DashboardScreen = new DashboardScreen(university, this);
+    dashboardScreen = new DashboardScreen(university, this);
     ui->stackedWidget->addWidget(loginScreen);
-    ui->stackedWidget->addWidget(DashboardScreen);
+    ui->stackedWidget->addWidget(dashboardScreen);
 
     ui->stackedWidget->setCurrentWidget(loginScreen);
 

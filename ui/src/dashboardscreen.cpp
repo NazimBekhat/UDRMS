@@ -6,11 +6,8 @@
 #include "Exceptions.h"
 #include <QMessageBox>
 
-DashboardScreen::DashboardScreen(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::DashboardScreen)
-    ,university(university)
-    ,currentUser(nullptr)
+DashboardScreen::DashboardScreen(University* university, QWidget *parent)
+    : QWidget(parent), ui(new Ui::DashboardScreen), university(university), currentUser(nullptr)
 {
     ui->setupUi(this);
     connect(ui->roomManagementButton, &QPushButton::clicked, this, &DashboardScreen::requestRoomManagement);
@@ -19,10 +16,7 @@ DashboardScreen::DashboardScreen(QWidget *parent)
     connect(ui->loadButton, &QPushButton::clicked, this, &DashboardScreen::onLoadClicked);
 }
 
-DashboardScreen::~DashboardScreen()
-{
-    delete ui;
-}
+DashboardScreen::~DashboardScreen() { delete ui; }
 
 void DashboardScreen::setUser(User* user)
 {

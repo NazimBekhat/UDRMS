@@ -96,10 +96,9 @@ void SystemAdmin::loadData(University& uni, const std::string& filename) {
     Dormitory* currentDorm = nullptr;
 
     while (getline(file, line)){
-        stringstream ss(line); //std::stringstream lets you treat a string like a stream you can read from piece by piece
-        //std::stringstream ss(line); This creates a stream object called ss, loaded with the text from line. Think of ss as a "reading head" positioned at the very start of the string.
+        stringstream ss(line); 
         string token;
-        getline(ss,token, '|');//| is the delimiter, it reads from the current position of ss (the start), grabs every character until it hits |, and stores that into token. Then it moves the reading head past that |, ready for the next read.
+        getline(ss,token, '|');
     
         //UNI
         if (token == "UNIVERSITY"){

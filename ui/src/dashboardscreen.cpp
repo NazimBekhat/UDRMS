@@ -6,6 +6,19 @@
 #include "SystemAdmin.h"
 #include "Exceptions.h"
 #include <QMessageBox>
+#include <QCoreApplication>
+#include <QDir>
+
+// Add this helper function near the top of the file, outside the class methods
+static QString getBackupFilePath()
+{
+    QString dirPath = QCoreApplication::applicationDirPath() + "/data";
+    QDir dir(dirPath);
+    if (!dir.exists()) {
+        dir.mkpath(".");   // creates the folder if it doesn't exist yet
+    }
+    return dirPath + "/backup.txt";
+}
 
 DashboardScreen::DashboardScreen(University* university, QWidget *parent)
     : QWidget(parent), ui(new Ui::DashboardScreen), university(university), currentUser(nullptr)
@@ -19,7 +32,8 @@ DashboardScreen::DashboardScreen(University* university, QWidget *parent)
     connect(ui->createUserButton, &QPushButton::clicked, this, &DashboardScreen::requestCreateUser);
 }
 
-DashboardScreen::~DashboardScreen() { delete ui; }
+DashboardScreen::~DashboardScreen()
+ { delete ui; }
 
 void DashboardScreen::setUser(User* user)
 {
@@ -39,7 +53,7 @@ void DashboardScreen::onBackupClicked()
 {
     SystemAdmin* admin = dynamic_cast<SystemAdmin*>(currentUser);
     try {
-        admin->backup(*university, "/home/bekhat-nazim/Documents/ENSIA/ENSIA-DOCS/1YS2/OOP/OOPproject/UDRMS/data/backup.txt");
+        admin->backup(*university, getBackupFilePath().toStdString());
         QMessageBox::information(this, "Backup", "Backup saved successfully.");
     } catch (const UDRMSException& e) {
         QMessageBox::warning(this, "Backup Failed", e.what());
@@ -50,7 +64,7 @@ void DashboardScreen::onLoadClicked()
 {
     SystemAdmin* admin = dynamic_cast<SystemAdmin*>(currentUser);
     try {
-        admin->loadData(*university, "/home/bekhat-nazim/Documents/ENSIA/ENSIA-DOCS/1YS2/OOP/OOPproject/UDRMS/data/backup.txt");
+        admin->loadData(*university, getBackupFilePath().toStdString());
         QMessageBox::information(this, "Load", "Data loaded successfully.");
     } catch (const UDRMSException& e) {
         QMessageBox::warning(this, "Load Failed", e.what());

@@ -13,8 +13,8 @@ MainWindow::MainWindow(University* university, QWidget *parent)
     , ui(new Ui::MainWindow)
     , university(university)
 {
-    setWindowTitle("UDRMS — University Dormitory & Restaurant Management");
     ui->setupUi(this);
+    setWindowTitle("UDRMS — University Dormitory & Restaurant Management");
 
     loginScreen = new LoginScreen(university, this);
     dashboardScreen = new DashboardScreen(university, this);

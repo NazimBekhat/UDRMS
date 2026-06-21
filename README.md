@@ -4,14 +4,17 @@ OOP course project (ENSIA, 2025-2026) — C++17 core with a Qt6 GUI.
 
 ## Features
 - Role-based access: Student, Staff, Administrator, SystemAdmin
-- Dormitory, room, and restaurant management
+- Dormitory management: create dormitories, add/remove rooms
+- Room management: assign/remove students, live occupancy tracking
+- Restaurant menu: view (all roles), edit (Staff, Administrator, SystemAdmin)
+- User creation with enforced creator-permission hierarchy (SystemAdmin → Administrator → Staff/Student)
 - File-based data persistence (backup/load)
 - Custom exception hierarchy for validation and error handling
 
 ## Architecture
 - `core/` — pure C++ domain logic (no Qt dependency)
 - `ui/` — Qt6 widgets calling core directly (no controller layer)
-- `data/` — runtime save files (gitignored except for `.gitkeep`)
+- `data/` — runtime save files (created automatically next to the executable)
 - `docs/` — UML diagram and design notes
 
 ## Installation & Build
@@ -41,9 +44,9 @@ Or open `CMakeLists.txt` directly in Qt Creator and run from there.
 |---|---|
 | Student | View rooms, view menu |
 | Staff | View rooms, edit restaurant menu |
-| Administrator | Assign/remove students from rooms, create Staff/Student accounts |
+| Administrator | Add dormitories/rooms, assign/remove students from rooms, create Staff/Student accounts |
 | SystemAdmin | All of the above, plus create Administrator accounts, backup/load data |
 
 ## Author
 Nazim Bekhat — ENSIA, 1st year
-📧 abderrahmane-nazim.bekhat@ensia.edu.dz
+E-MAIL: abderrahmane-nazim.bekhat@ensia.edu.dz

@@ -42,32 +42,26 @@
     </widget>
    </item>
    <item>
+    <widget class="QLineEdit" name="lunchMenuLineEdit"/>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="breakfastMenuLineEdit"/>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="dinnerMenuLineEdit"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="saveMenuButton">
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLineEdit" name="studentIdLineEdit"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="breakfastMenuLabel">
-       <property name="text">
-        <string>Breakfast</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lunchMenuLabel">
-       <property name="text">
-        <string>Lunch</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="dinnerMenuLabel">
-       <property name="text">
-        <string>Dinner</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <layout class="QHBoxLayout" name="horizontalLayout"/>
    </item>
   </layout>
  </widget>

@@ -4,6 +4,7 @@
 
 class University;
 class User;
+class Staff;
 class Room;
 
 namespace Ui {
@@ -28,11 +29,13 @@ private slots:
     void onRoomSelected(int row);
     void onAssignClicked();
     void onRemoveClicked();
+    void onSaveMenuClicked();
 
 private:
     void populateDormitoryList();
     void populateRoomList();
     void updateMenuLabels();
+    bool canEditMenu() const;  
 
     Ui::RoomManagementScreen *ui;
     University* university;

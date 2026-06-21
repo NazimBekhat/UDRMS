@@ -9,6 +9,7 @@
 #include "Restaurant.h"
 #include "SystemAdmin.h"
 #include "Administrator.h"
+#include "Staff.h"
 #include <QMessageBox>
 
 RoomManagementScreen::RoomManagementScreen(University* university, QWidget *parent)
@@ -26,6 +27,7 @@ RoomManagementScreen::RoomManagementScreen(University* university, QWidget *pare
     connect(ui->assignButton, &QPushButton::clicked, this, &RoomManagementScreen::onAssignClicked);
     connect(ui->removeButton, &QPushButton::clicked, this, &RoomManagementScreen::onRemoveClicked);
     connect(ui->backButton, &QPushButton::clicked, this, &RoomManagementScreen::requestBack);
+    connect(ui->saveMenuButton, &QPushButton::clicked, this, &RoomManagementScreen::onSaveMenuClicked);
 }
 
 RoomManagementScreen::~RoomManagementScreen() { delete ui; }
@@ -142,24 +144,55 @@ void RoomManagementScreen::onRemoveClicked()
     }
 }
 
+void RoomManagementScreen::setUser(User* user)
+{
+    currentUser = user;
+    bool canEditRooms = (dynamic_cast<Administrator*>(user) != nullptr)
+                      || (dynamic_cast<SystemAdmin*>(user) != nullptr);
+    bool canEditTheMenu = canEditMenu();
+
+    ui->studentIdLineEdit->setVisible(canEditRooms);
+    ui->assignButton->setVisible(canEditRooms);
+    ui->removeButton->setVisible(canEditRooms);
+
+    ui->breakfastMenuLineEdit->setReadOnly(!canEditTheMenu);
+    ui->lunchMenuLineEdit->setReadOnly(!canEditTheMenu);
+    ui->dinnerMenuLineEdit->setReadOnly(!canEditTheMenu);
+    ui->saveMenuButton->setVisible(canEditTheMenu);
+}
+
+bool RoomManagementScreen::canEditMenu() const
+{
+    return (dynamic_cast<Staff*>(currentUser) != nullptr)
+        || (dynamic_cast<Administrator*>(currentUser) != nullptr)
+        || (dynamic_cast<SystemAdmin*>(currentUser) != nullptr);
+}
+
 void RoomManagementScreen::updateMenuLabels()
 {
     if (currentDormitoryIndex < 0) return;
     Dormitory& dorm = university->getDormitories()[currentDormitoryIndex];
     const Restaurant& restaurant = dorm.getRestaurant();
 
-    ui->breakfastMenuLabel->setText("Breakfast: " + QString::fromStdString(restaurant.getBreakFastMenu()));
-    ui->lunchMenuLabel->setText("Lunch: " + QString::fromStdString(restaurant.getLunchMenu()));
-    ui->dinnerMenuLabel->setText("Dinner: " + QString::fromStdString(restaurant.getDinnerMenu()));
+    ui->breakfastMenuLineEdit->setText(QString::fromStdString(restaurant.getBreakFastMenu()));
+    ui->lunchMenuLineEdit->setText(QString::fromStdString(restaurant.getLunchMenu()));
+    ui->dinnerMenuLineEdit->setText(QString::fromStdString(restaurant.getDinnerMenu()));
 }
 
-void RoomManagementScreen::setUser(User* user)
+void RoomManagementScreen::onSaveMenuClicked()
 {
-    currentUser = user;
-    bool canEdit = (dynamic_cast<Administrator*>(user) != nullptr)
-                || (dynamic_cast<SystemAdmin*>(user) != nullptr);
+    if (!canEditMenu()) {
+        QMessageBox::warning(this, "Permission Denied", "You don't have permission to edit the menu.");
+        return;
+    }
+    if (currentDormitoryIndex < 0) return;
 
-    ui->studentIdLineEdit->setVisible(canEdit);
-    ui->assignButton->setVisible(canEdit);
-    ui->removeButton->setVisible(canEdit);
+    Dormitory& dorm = university->getDormitories()[currentDormitoryIndex];
+    Restaurant& restaurant = dorm.getRestaurant();
+
+    restaurant.setBreakFastMenu(ui->breakfastMenuLineEdit->text().toStdString());
+    restaurant.setLunchMenu(ui->lunchMenuLineEdit->text().toStdString());
+    restaurant.setDinnerMenu(ui->dinnerMenuLineEdit->text().toStdString());
+
+    QMessageBox::information(this, "Menu Updated", "Restaurant menu saved.");
 }
